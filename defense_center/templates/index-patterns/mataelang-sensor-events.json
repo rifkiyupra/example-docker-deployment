@@ -1,0 +1,8 @@
+{
+    "attributes": {
+      "title": "mataelang-sensor-events",
+      "timeFieldName": "@timestamp",
+      "fields": "[]"
+    }
+  }
+  

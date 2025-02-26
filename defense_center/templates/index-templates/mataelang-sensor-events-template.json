@@ -1,0 +1,20 @@
+{
+    "index_patterns": [
+        "mataelang-sensor-events-stream"
+    ],
+    "data_stream": {
+        "timestamp_field": {
+            "name": "@timestamp"
+        }
+    },
+    "priority": 0,
+    "composed_of": [
+        "mataelang-sensor-events-mapping"
+    ],
+    "template": {
+        "settings": {
+            "number_of_shards": 1,
+            "number_of_replicas": 0
+        }
+    }
+}

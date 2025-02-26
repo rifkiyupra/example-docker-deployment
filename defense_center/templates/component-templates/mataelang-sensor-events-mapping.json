@@ -1,0 +1,412 @@
+{
+    "template": {
+        "mappings": {
+            "properties": {
+                "action": {
+                    "type": "text",
+                    "fields": {
+                        "keyword": {
+                            "type": "keyword"
+                        }
+                    }
+                },
+                "b64_data": {
+                    "type": "text"
+                },
+                "class": {
+                    "type": "text",
+                    "fields": {
+                        "keyword": {
+                            "type": "keyword"
+                        }
+                    }
+                },
+                "client_bytes": {
+                    "type": "long"
+                },
+                "client_pkts": {
+                    "type": "long"
+                },
+                "dir": {
+                    "type": "text",
+                    "fields": {
+                        "keyword": {
+                            "type": "keyword"
+                        }
+                    }
+                },
+                "dst_addr": {
+                    "type": "ip"
+                },
+                "dst_geoip": {
+                    "type": "object",
+                    "properties": {
+                        "geo": {
+                            "type": "object",
+                            "properties": {
+                                "region_iso_code": {
+                                    "type": "text",
+                                    "fields": {
+                                        "keyword": {
+                                            "type": "keyword"
+                                        }
+                                    }
+                                },
+                                "postal_code": {
+                                    "type": "text",
+                                    "fields": {
+                                        "keyword": {
+                                            "type": "keyword"
+                                        }
+                                    }
+                                },
+                                "country_name": {
+                                    "type": "text",
+                                    "fields": {
+                                        "keyword": {
+                                            "type": "keyword"
+                                        }
+                                    }
+                                },
+                                "city_name": {
+                                    "type": "text",
+                                    "fields": {
+                                        "keyword": {
+                                            "type": "keyword"
+                                        }
+                                    }
+                                },
+                                "continent_code": {
+                                    "type": "text",
+                                    "fields": {
+                                        "keyword": {
+                                            "type": "keyword"
+                                        }
+                                    }
+                                },
+                                "country_iso_code": {
+                                    "type": "text",
+                                    "fields": {
+                                        "keyword": {
+                                            "type": "keyword"
+                                        }
+                                    }
+                                },
+                                "region_name": {
+                                    "type": "text",
+                                    "fields": {
+                                        "keyword": {
+                                            "type": "keyword"
+                                        }
+                                    }
+                                },
+                                "timezone": {
+                                    "type": "text",
+                                    "fields": {
+                                        "keyword": {
+                                            "type": "keyword"
+                                        }
+                                    }
+                                },
+                                "location": {
+                                    "type": "geo_point"
+                                }
+                            }
+                        },
+                        "ip": {
+                            "type": "ip"
+                        }
+                    }
+                },
+                "dst_ap": {
+                    "type": "text",
+                    "fields": {
+                        "keyword": {
+                            "type": "keyword"
+                        }
+                    }
+                },
+                "dst_port": {
+                    "type": "integer"
+                },
+                "eth_dst": {
+                    "type": "text",
+                    "fields": {
+                        "keyword": {
+                            "type": "keyword"
+                        }
+                    }
+                },
+                "eth_len": {
+                    "type": "long"
+                },
+                "eth_src": {
+                    "type": "text",
+                    "fields": {
+                        "keyword": {
+                            "type": "keyword"
+                        }
+                    }
+                },
+                "eth_type": {
+                    "type": "text",
+                    "fields": {
+                        "keyword": {
+                            "type": "keyword"
+                        }
+                    }
+                },
+                "flowstart_time": {
+                    "type": "date"
+                },
+                "geneve_vni": {
+                    "type": "integer"
+                },
+                "gid": {
+                    "type": "integer"
+                },
+                "icmp_code": {
+                    "type": "integer"
+                },
+                "icmp_id": {
+                    "type": "integer"
+                },
+                "icmp_seq": {
+                    "type": "integer"
+                },
+                "icmp_type": {
+                    "type": "integer"
+                },
+                "iface": {
+                    "type": "text",
+                    "fields": {
+                        "keyword": {
+                            "type": "keyword"
+                        }
+                    }
+                },
+                "ip_id": {
+                    "type": "integer"
+                },
+                "ip_len": {
+                    "type": "long"
+                },
+                "mpls": {
+                    "type": "integer"
+                },
+                "msg": {
+                    "type": "text",
+                    "fields": {
+                        "keyword": {
+                            "type": "keyword"
+                        }
+                    }
+                },
+                "pkt_gen": {
+                    "type": "text",
+                    "fields": {
+                        "keyword": {
+                            "type": "keyword"
+                        }
+                    }
+                },
+                "pkt_len": {
+                    "type": "long"
+                },
+                "pkt_num": {
+                    "type": "long"
+                },
+                "priority": {
+                    "type": "integer"
+                },
+                "priority_str": {
+                    "type": "text",
+                    "fields": {
+                        "keyword": {
+                            "type": "keyword"
+                        }
+                    }
+                },
+                "proto": {
+                    "type": "text",
+                    "fields": {
+                        "keyword": {
+                            "type": "keyword"
+                        }
+                    }
+                },
+                "rev": {
+                    "type": "integer"
+                },
+                "rule": {
+                    "type": "text",
+                    "fields": {
+                        "keyword": {
+                            "type": "keyword"
+                        }
+                    }
+                },
+                "seconds": {
+                    "type": "date"
+                },
+                "server_bytes": {
+                    "type": "long"
+                },
+                "server_pkts": {
+                    "type": "long"
+                },
+                "service": {
+                    "type": "text",
+                    "fields": {
+                        "keyword": {
+                            "type": "keyword"
+                        }
+                    }
+                },
+                "sgt": {
+                    "type": "integer"
+                },
+                "sid": {
+                    "type": "integer"
+                },
+                "src_addr": {
+                    "type": "ip"
+                },
+                "src_geoip": {
+                    "type": "object",
+                    "properties": {
+                        "geo": {
+                            "type": "object",
+                            "properties": {
+                                "region_iso_code": {
+                                    "type": "text",
+                                    "fields": {
+                                        "keyword": {
+                                            "type": "keyword"
+                                        }
+                                    }
+                                },
+                                "postal_code": {
+                                    "type": "text",
+                                    "fields": {
+                                        "keyword": {
+                                            "type": "keyword"
+                                        }
+                                    }
+                                },
+                                "country_name": {
+                                    "type": "text",
+                                    "fields": {
+                                        "keyword": {
+                                            "type": "keyword"
+                                        }
+                                    }
+                                },
+                                "city_name": {
+                                    "type": "text",
+                                    "fields": {
+                                        "keyword": {
+                                            "type": "keyword"
+                                        }
+                                    }
+                                },
+                                "continent_code": {
+                                    "type": "text",
+                                    "fields": {
+                                        "keyword": {
+                                            "type": "keyword"
+                                        }
+                                    }
+                                },
+                                "country_iso_code": {
+                                    "type": "text",
+                                    "fields": {
+                                        "keyword": {
+                                            "type": "keyword"
+                                        }
+                                    }
+                                },
+                                "region_name": {
+                                    "type": "text",
+                                    "fields": {
+                                        "keyword": {
+                                            "type": "keyword"
+                                        }
+                                    }
+                                },
+                                "timezone": {
+                                    "type": "text",
+                                    "fields": {
+                                        "keyword": {
+                                            "type": "keyword"
+                                        }
+                                    }
+                                },
+                                "location": {
+                                    "type": "geo_point"
+                                }
+                            }
+                        },
+                        "ip": {
+                            "type": "ip"
+                        }
+                    }
+                },
+                "src_ap": {
+                    "type": "text",
+                    "fields": {
+                        "keyword": {
+                            "type": "keyword"
+                        }
+                    }
+                },
+                "src_port": {
+                    "type": "integer"
+                },
+                "target": {
+                    "type": "text",
+                    "fields": {
+                        "keyword": {
+                            "type": "keyword"
+                        }
+                    }
+                },
+                "tcp_ack": {
+                    "type": "long"
+                },
+                "tcp_flags": {
+                    "type": "text",
+                    "fields": {
+                        "keyword": {
+                            "type": "keyword"
+                        }
+                    }
+                },
+                "tcp_len": {
+                    "type": "long"
+                },
+                "tcp_seq": {
+                    "type": "long"
+                },
+                "tcp_win": {
+                    "type": "long"
+                },
+                "timestamp": {
+                    "type": "text"
+                },
+                "tos": {
+                    "type": "integer"
+                },
+                "ttl": {
+                    "type": "integer"
+                },
+                "udp_len": {
+                    "type": "long"
+                },
+                "vlan": {
+                    "type": "long"
+                }
+            }
+        }
+    }
+}

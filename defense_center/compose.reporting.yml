@@ -1,0 +1,146 @@
+# language: yaml
+# yaml-language-server: $schema=https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json
+name: mataelang-reporting
+
+networks:
+  default:
+    external:
+      name: mataelang
+
+volumes:
+  postgresql_data:
+  redis_data:
+  report_data:
+
+services:
+  report-command-service:
+    image: ghcr.io/mata-elang-stable/report-command-service:latest
+    restart: unless-stopped
+    depends_on:
+      - report-api
+    environment:
+      - KAFKA_BROKERS=broker:29092
+      - KAFKA_TOPIC_INPUT=sensor_events
+      - SCHEMA_REGISTRY_URL=http://schema-registry:8081
+      - REPORT_API_URL=http://report-api-web
+      - REPORT_POST_EVENT_PATH=/api/report-index
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: 512M
+
+  iplookup-api:
+    image: ghcr.io/mata-elang-stable/iplookup-api:latest
+    restart: unless-stopped
+    environment:
+      - LISTEN_PORT=3000
+      - MMDB_REGION_FILE_PATH=/usr/share/GeoIP/GeoLite2-City.mmdb
+      - MMDB_ASN_FILE_PATH=/usr/share/GeoIP/GeoLite2-ASN.mmdb
+      - CACHE_TTL_SEC=3600
+    volumes:
+      - ./files/GeoLite2-City.mmdb:/usr/share/GeoIP/GeoLite2-City.mmdb:ro
+      - ./files/GeoLite2-ASN.mmdb:/usr/share/GeoIP/GeoLite2-ASN.mmdb:ro
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: 512M
+
+  postgresql:
+    image: postgres:17
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-mataelang}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-mataelang}
+      POSTGRES_DB: ${POSTGRES_DB:-mataelang_report}
+    env_file:
+      - .env
+    volumes:
+      - postgresql_data:/var/lib/postgresql/data
+    healthcheck:
+      test:
+        - CMD
+        - pg_isready
+        - '-q'
+        - '-d'
+        - '${POSTGRES_DB}'
+        - '-U'
+        - '${POSTGRES_USER}'
+      retries: 3
+      timeout: 5s
+    deploy:
+      resources:
+        limits:
+          cpus: "2.0"
+          memory: 1G
+
+  report-api:
+    image: ghcr.io/mata-elang-stable/report-api-service:latest
+    restart: unless-stopped
+    depends_on:
+      postgresql:
+          condition: service_healthy
+      redis:
+          condition: service_healthy
+      chromium:
+          condition: service_started
+      web:
+          condition: service_started
+      iplookup-api:
+          condition: service_started
+    env_file:
+      - ./conf/report-api.env
+      - .env
+    volumes:
+      - report_data:/var/www/html/
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: 1G
+
+  report-api-web:
+    image: nginx:1.27
+    restart: unless-stopped
+    ports:
+      - "8085:80"
+    volumes:
+      - ./conf/default.conf:/etc/nginx/conf.d/default.conf
+      - report_data:/var/www/html/:ro
+
+  redis:
+    image: valkey/valkey:8
+    restart: unless-stopped
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test:
+        - CMD
+        - redis-cli
+        - ping
+      retries: 3
+      timeout: 5s
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: 512M
+
+  chromium:
+    image: zenika/alpine-chrome:100
+    command:
+      - chromium-browser
+      - "--headless"
+      - "--disable-gpu"
+      - "--remote-debugging-address=0.0.0.0"
+      - "--remote-debugging-port=9222"
+      - "--no-sandbox"
+      - "--disable-dev-shm-usage"
+    cap_add:
+      - SYS_ADMIN
+    deploy:
+      resources:
+        limits:
+          cpus: "2.0"
+          memory: 1G

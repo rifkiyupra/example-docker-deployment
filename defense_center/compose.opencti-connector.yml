@@ -1,0 +1,37 @@
+# language: yaml
+# yaml-language-server: $schema=https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json
+name: mataelang-opencti-connector
+
+networks:
+  default:
+    external:
+      name: mataelang
+
+services:
+  opencti-connector-aggregator:
+    image: ghcr.io/mata-elang-stable/opencti-connector-aggregator:main
+    restart: unless-stoped
+    environment:
+      - KAFKA_URL=broker:29092
+      - KAFKA_CONSUMER_GROUP_ID=opencti-aggr
+      - KAFKA_TOPIC=sensor_events
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: 256M
+
+  opencti-connector-parser:
+    image: ghcr.io/mata-elang-stable/opencti-connector-parser:main
+    restart: unless-stoped
+    environment:
+      - KAFKA_URL=broker:29092
+      - KAFKA_CONSUMER_GROUP_ID=opencti-connector-parser
+      - KAFKA_TOPIC=opencti_events
+    env_file:
+      - .env
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: 256M
